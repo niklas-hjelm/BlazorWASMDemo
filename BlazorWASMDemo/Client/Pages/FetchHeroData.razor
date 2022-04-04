@@ -1,0 +1,73 @@
+﻿@page "/fetchherodata"
+@using Microsoft.AspNetCore.Components
+@using BlazorWASMDemo.Shared
+
+@inject HttpClient _httpClient
+
+<h1>Heroes Page</h1>
+
+@*<p>Add another Hero:</p>
+
+<p>
+    <input @bind="Hero.Name"/>
+</p>
+
+<p>
+    <input @bind="Hero.HeroName"/>
+</p>
+<p>
+    <input @bind="Hero.Powers"/>
+</p>
+<button class="btn btn-primary" @onclick="AddHero">Save</button>*@
+
+<p>These are our heroes.</p>
+
+@if (_heroes == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Hero Name</th>
+            <th>Powers</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var hero in _heroes)
+        {
+            <tr>
+                <td>@hero.Id</td>
+                <td>@hero.Name</td>
+                <td>@hero.HeroName</td>
+                <td>
+                    @foreach (var power in @hero.Powers.Split(','))
+                    {
+                        <p>@power</p>
+                    }
+                </td>
+               @* <td>
+                    <button class="btn btn-danger" @onclick="()=> DeleteHero(hero.Id)">Delete</button>
+                </td>*@
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+@code {
+
+    public Hero Hero { get; set; } = new();
+
+    private ICollection<Hero>? _heroes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await _httpClient.GetFromJsonAsync<ICollection<Hero>>("api/Hero");
+        _heroes = result;
+    }
+
+}
