@@ -1,5 +1,7 @@
 global using BlazorWASMDemo.Shared;
 global using BlazorWASMDemo.Server.DAL;
+global using BlazorWASMDemo.Server.Services;
+global using BlazorWASMDemo.Server.Services.Interfaces;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +18,7 @@ builder.Services.AddDbContext<HeroContext>(options =>
 });
 
 builder.Services.AddScoped<HeroRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 

@@ -1,4 +1,7 @@
-using BlazorWASMDemo.Client;
+global using BlazorWASMDemo.Client;
+global using BlazorWASMDemo.Client.Services;
+global using BlazorWASMDemo.Client.Services.Interfaces;
+global using BlazorWASMDemo.Client.Shared;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -11,5 +14,7 @@ builder.Services.AddScoped(sp =>
     {
         BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
     });
+
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 await builder.Build().RunAsync();

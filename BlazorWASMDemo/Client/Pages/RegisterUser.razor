@@ -1,0 +1,41 @@
+﻿@page "/register"
+@inject IAuthService _authService
+
+<PageTitle>Registration</PageTitle>
+
+<h3>RegisterUser</h3>
+
+<EditForm Model="_user" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="email">Email</label>
+        <InputText id="email" @bind-Value="_user.Email"/>
+    </div>
+    <div class="mb-3">
+        <label for="password">Password</label>
+        <InputText id="password" @bind-Value="_user.Password" type="password"/>
+    </div>
+    <div class="mb-3">
+        <label for="confirmPassword">Confirm Password</label>
+        <InputText id="confirmPassword" @bind-Value="_user.PasswordConfirm" type="password"/>
+    </div>
+    <ValidationSummary />
+    <button type="submit" class="btn btn-primary">Register</button>
+    <div class="text-danger">
+        <span>@errorMessage</span>
+    </div>
+</EditForm>
+
+@code {
+    UserRegister _user = new UserRegister();
+
+    string errorMessage = string.Empty;
+
+    async Task HandleSubmit()
+    {
+        var result = await _authService.Register(_user);
+
+        errorMessage = result.Success ? string.Empty : result.Message;
+    }
+
+}
