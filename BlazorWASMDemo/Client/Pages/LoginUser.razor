@@ -1,0 +1,28 @@
+﻿@page "/login"
+
+<h3>LoginUser</h3>
+
+<EditForm Model="_user" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="email">Email</label>
+        <InputText id="email" @bind-Value="_user.Email"/>
+    </div>
+    <div class="mb-3">
+        <label for="password">Password</label>
+        <InputText id="password" @bind-Value="_user.Password" type="password"/>
+    </div>
+    <ValidationSummary />
+    <button type="submit" class="btn btn-primary">Login</button>
+</EditForm>
+
+@code {
+
+    UserLogin _user = new();
+
+    async Task HandleSubmit()
+    {
+        
+    }
+
+}

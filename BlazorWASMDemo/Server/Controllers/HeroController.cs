@@ -20,5 +20,19 @@ namespace BlazorWASMDemo.Server.Controllers
             var heroes = await _heroRepository.GetAllHeroesAsync();
             return Ok(heroes);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> PostHero(Hero entity)
+        {
+            var result = await _heroRepository.CreateHeroAsync(entity);
+            return result ? Ok() : BadRequest();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteHeroAsync(int id)
+        {
+            _heroRepository.DeleteHero(id);
+            return Ok();
+        }
     }
 }
