@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddDbContext<HeroContext>(options =>
 {
@@ -20,12 +21,16 @@ builder.Services.AddDbContext<HeroContext>(options =>
 builder.Services.AddScoped<HeroRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseWebAssemblyDebugging();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 else
 {

@@ -1,4 +1,6 @@
 ﻿@page "/login"
+@inject IAuthService _authService
+@inject ILocalStorageService _localStorage
 
 <h3>LoginUser</h3>
 
@@ -15,13 +17,28 @@
     <ValidationSummary />
     <button type="submit" class="btn btn-primary">Login</button>
 </EditForm>
-
+<div class="text-danger">
+    <span>@_errorMessage</span>
+</div>
 @code {
 
     UserLogin _user = new();
+    string _errorMessage = string.Empty;
 
     async Task HandleSubmit()
     {
+        var result = await _authService.Login(_user);
+
+        if (result.Success)
+        {
+            _errorMessage = string.Empty;
+
+            await _localStorage.SetItemAsync("authToken", result.Data);
+        }
+        else
+        {
+            _errorMessage = result.Message;
+        }
         
     }
 

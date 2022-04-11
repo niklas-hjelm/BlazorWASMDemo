@@ -67,6 +67,7 @@ namespace BlazorWASMDemo.Server.Services
             }
             else
             {
+                response.Success = true;
                 response.Data = CreateToken(user);
             }
 
@@ -78,7 +79,7 @@ namespace BlazorWASMDemo.Server.Services
             var claims = new List<Claim>
             {
                 new (ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new (ClaimTypes.Name, user.Email),
+                new (ClaimTypes.Name, user.Email)
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.
