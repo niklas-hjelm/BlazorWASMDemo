@@ -1,5 +1,4 @@
 ﻿@page "/register"
-@inject IAuthService _authService
 
 <PageTitle>Registration</PageTitle>
 
@@ -21,21 +20,8 @@
     </div>
     <ValidationSummary />
     <button type="submit" class="btn btn-primary">Register</button>
-    <div class="text-danger">
-        <span>@errorMessage</span>
+    <div class="@_messageCssClass">
+        <span>@_message</span>
     </div>
 </EditForm>
 
-@code {
-    UserRegister _user = new UserRegister();
-
-    string errorMessage = string.Empty;
-
-    async Task HandleSubmit()
-    {
-        var result = await _authService.Register(_user);
-
-        errorMessage = result.Success ? string.Empty : result.Message;
-    }
-
-}
