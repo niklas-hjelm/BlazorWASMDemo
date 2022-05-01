@@ -6,19 +6,22 @@
 
 <h1>Heroes Page</h1>
 
-@*<p>Add another Hero:</p>
+<p>Add another Hero:</p>
 
 <p>
-    <input @bind="Hero.Name"/>
+    <label for="realname">Name:</label>
+    <input name="realname" @bind="Hero.Name"/>
 </p>
 
 <p>
-    <input @bind="Hero.HeroName"/>
+    <label for="heroname">Hero Name:</label>
+    <input name="heroname" @bind="Hero.HeroName"/>
 </p>
 <p>
-    <input @bind="Hero.Powers"/>
+    <label for="powers">Powers:</label>
+    <input name="powers" @bind="Hero.Powers"/>
 </p>
-<button class="btn btn-primary" @onclick="AddHero">Save</button>*@
+<button class="btn btn-primary" @onclick="AddHeroAsync">Save</button>
 
 <p>These are our heroes.</p>
 
@@ -50,9 +53,9 @@ else
                         <p>@power</p>
                     }
                 </td>
-               @* <td>
-                    <button class="btn btn-danger" @onclick="()=> DeleteHero(hero.Id)">Delete</button>
-                </td>*@
+                <td>
+                    <button class="btn btn-danger" @onclick="()=> DeleteHeroAsync(hero.Id)">Delete</button>
+                </td>
             </tr>
         }
         </tbody>
@@ -66,8 +69,28 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        await GetAllHeroesAsync();
+    }
+
+    private async Task AddHeroAsync()
+    {
+        var newHero = Hero.CopyHero(Hero);
+
+        var result = await _httpClient.PostAsJsonAsync("api/Hero", newHero);
+
+        await GetAllHeroesAsync();
+    }
+
+    private async Task GetAllHeroesAsync()
+    {
         var result = await _httpClient.GetFromJsonAsync<ICollection<Hero>>("api/Hero");
         _heroes = result;
+    }
+
+    private async Task DeleteHeroAsync(int heroId)
+    {
+        var result = await _httpClient.DeleteAsync($"api/Hero/{heroId}");
+        await GetAllHeroesAsync();
     }
 
 }

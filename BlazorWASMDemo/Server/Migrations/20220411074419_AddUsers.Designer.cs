@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorWASMDemo.Server.Migrations
 {
     [DbContext(typeof(HeroContext))]
-    [Migration("20220407204102_addedUsers")]
-    partial class addedUsers
+    [Migration("20220411074419_AddUsers")]
+    partial class AddUsers
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

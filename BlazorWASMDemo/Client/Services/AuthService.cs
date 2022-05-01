@@ -1,5 +1,4 @@
 ﻿using System.Net.Http.Json;
-using BlazorWASMDemo.Client.Services.Interfaces;
 using BlazorWASMDemo.Shared;
 
 namespace BlazorWASMDemo.Client.Services
