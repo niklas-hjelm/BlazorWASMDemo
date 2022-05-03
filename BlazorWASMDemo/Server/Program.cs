@@ -2,7 +2,6 @@ global using BlazorWASMDemo.Shared;
 global using BlazorWASMDemo.Server.DAL;
 global using BlazorWASMDemo.Server.Services;
 global using BlazorWASMDemo.Server.Services.Interfaces;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

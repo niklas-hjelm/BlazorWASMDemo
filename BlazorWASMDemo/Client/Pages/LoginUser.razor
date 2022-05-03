@@ -1,6 +1,8 @@
 ﻿@page "/login"
 @inject IAuthService _authService
 @inject ILocalStorageService _localStorage
+@inject NavigationManager _navigationManager
+@inject AuthenticationStateProvider _authenticationStateProvider
 
 <h3>LoginUser</h3>
 
@@ -34,6 +36,8 @@
             _errorMessage = string.Empty;
 
             await _localStorage.SetItemAsync("authToken", result.Data);
+            await _authenticationStateProvider.GetAuthenticationStateAsync();
+            _navigationManager.NavigateTo("");
         }
         else
         {
